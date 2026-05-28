@@ -2,6 +2,9 @@
 
 A full-stack recipe management application built with .NET Aspire 13.2, demonstrating modern cloud-native patterns for the **GitHub Copilot & Squad Developer Workflow Hackathon**. Participants learn to leverage AI agents for feature development, testing, and debugging through seven progressive challenges.
 
+<img width="878" height="1414" alt="Recipe-Hub_Demo" src="https://github.com/user-attachments/assets/8acbcfd6-08cc-4d54-85c4-814a086492e2" />
+
+
 ## Architecture
 
 RecipeHub uses **.NET Aspire 13.2** for orchestration, combining a **.NET 10 Minimal API** backend with **EF Core 10** and **SQLite** for data persistence. The frontend is a **React 19** SPA built with **TypeScript**, **Vite 6**, and **TanStack Query v5** for server state management. Aspire's dashboard provides unified observability across all services during development.
