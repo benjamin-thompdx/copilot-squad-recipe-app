@@ -1,0 +1,65 @@
+@keyframes shimmer {
+  0% {
+    background-color: var(--color-skeleton-base);
+  }
+  50% {
+    background-color: var(--color-skeleton-highlight);
+  }
+  100% {
+    background-color: var(--color-skeleton-base);
+  }
+}
+
+.skeleton {
+  max-width: 720px;
+  padding: 1rem 0;
+}
+
+.titleBar,
+.metaChip,
+.imageBlock,
+.sectionHead,
+.stepLine {
+  border-radius: 6px;
+  background: var(--color-skeleton-base);
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.titleBar {
+  height: 2rem;
+  width: 60%;
+  margin-bottom: 1rem;
+}
+
+.metaRow {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.metaChip {
+  height: 1rem;
+  width: 5rem;
+}
+
+.imageBlock {
+  height: 240px;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.sectionHead {
+  height: 1.25rem;
+  width: 8rem;
+  margin-bottom: 1rem;
+}
+
+.stepLine {
+  height: 0.875rem;
+  width: 90%;
+  margin-bottom: 0.75rem;
+}
+
+.stepLine:nth-child(even) {
+  width: 75%;
+}

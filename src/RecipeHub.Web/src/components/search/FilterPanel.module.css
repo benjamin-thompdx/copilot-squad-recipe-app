@@ -14,7 +14,7 @@
 }
 
 .chip:focus-visible {
-  outline: 2px solid #4a7fbf;
+  outline: 2px solid var(--color-link);
   outline-offset: 2px;
 }
 
@@ -23,6 +23,6 @@
 }
 
 .error {
-  color: #a33;
+  color: var(--color-error-text);
   font-size: 0.9rem;
 }

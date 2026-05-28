@@ -1,0 +1,48 @@
+Using launch settings from src\RecipeHub.AppHost\Properties\launchSettings.json...
+Building...
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.ServiceDefaults\RecipeHub.ServiceDefaults.csproj : warning NU1902: Package 'OpenTelemetry.Api' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g94r-2vxg-569j [C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.AppHost\RecipeHub.AppHost.csproj]
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.Api\RecipeHub.Api.csproj : warning NU1902: Package 'OpenTelemetry.Api' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g94r-2vxg-569j [C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.AppHost\RecipeHub.AppHost.csproj]
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.ServiceDefaults\RecipeHub.ServiceDefaults.csproj : warning NU1902: Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-4625-4j76-fww9 [C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.AppHost\RecipeHub.AppHost.csproj]
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.Api\RecipeHub.Api.csproj : warning NU1902: Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-4625-4j76-fww9 [C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.AppHost\RecipeHub.AppHost.csproj]
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.ServiceDefaults\RecipeHub.ServiceDefaults.csproj : warning NU1902: Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-mr8r-92fq-pj8p [C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.AppHost\RecipeHub.AppHost.csproj]
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.ServiceDefaults\RecipeHub.ServiceDefaults.csproj : warning NU1902: Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-q834-8qmm-v933 [C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.AppHost\RecipeHub.AppHost.csproj]
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.Api\RecipeHub.Api.csproj : warning NU1902: Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-mr8r-92fq-pj8p [C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.AppHost\RecipeHub.AppHost.csproj]
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.Api\RecipeHub.Api.csproj : warning NU1902: Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-q834-8qmm-v933 [C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.AppHost\RecipeHub.AppHost.csproj]
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.Api\RecipeHub.Api.csproj : warning NU1902: Package 'OpenTelemetry.Api' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g94r-2vxg-569j
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.Api\RecipeHub.Api.csproj : warning NU1902: Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-4625-4j76-fww9
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.Api\RecipeHub.Api.csproj : warning NU1902: Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-mr8r-92fq-pj8p
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.Api\RecipeHub.Api.csproj : warning NU1902: Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-q834-8qmm-v933
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.ServiceDefaults\RecipeHub.ServiceDefaults.csproj : warning NU1902: Package 'OpenTelemetry.Api' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g94r-2vxg-569j
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.ServiceDefaults\RecipeHub.ServiceDefaults.csproj : warning NU1902: Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-4625-4j76-fww9
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.ServiceDefaults\RecipeHub.ServiceDefaults.csproj : warning NU1902: Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-mr8r-92fq-pj8p
+C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.ServiceDefaults\RecipeHub.ServiceDefaults.csproj : warning NU1902: Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-q834-8qmm-v933
+info: Aspire.Hosting.DistributedApplication[0]
+      Aspire version: 13.2.2+25961cf7043e413abaf8ad84348988f2904b90d5
+info: Aspire.Hosting.DistributedApplication[0]
+      Distributed application starting.
+info: Aspire.Hosting.DistributedApplication[0]
+      Application host directory is: C:\Users\thomben01\source\repos\Hackathons\copilot-squad-recipe-app\src\RecipeHub.AppHost
+warn: Aspire.Hosting.Dcp.DcpHost[0]
+      No trusted Aspire development certificate was found. See https://aka.ms/aspire/devcerts for more information.
+info: Aspire.Hosting.DistributedApplication[0]
+      Now listening on: https://localhost:17054
+info: Aspire.Hosting.DistributedApplication[0]
+      Login to the dashboard at https://localhost:17054/login?t=d8e3e507ce3aabf6d58c7b41fb093c70
+info: Aspire.Hosting.DistributedApplication[0]
+      Distributed application started. Press Ctrl+C to shut down.
+fail: Aspire.Hosting.Dashboard.Microsoft.AspNetCore.Server.Kestrel[0]
+      HTTP/2 over TLS was not negotiated on an HTTP/2-only endpoint.
+fail: Aspire.Hosting.Dashboard.Microsoft.AspNetCore.Server.Kestrel[0]
+      HTTP/2 over TLS was not negotiated on an HTTP/2-only endpoint.
+fail: Aspire.Hosting.Dashboard.Microsoft.AspNetCore.Server.Kestrel[0]
+      HTTP/2 over TLS was not negotiated on an HTTP/2-only endpoint.
+fail: Aspire.Hosting.Dashboard.Microsoft.AspNetCore.Server.Kestrel[0]
+      HTTP/2 over TLS was not negotiated on an HTTP/2-only endpoint.
+fail: Aspire.Hosting.Dashboard.Microsoft.AspNetCore.Server.Kestrel[0]
+      HTTP/2 over TLS was not negotiated on an HTTP/2-only endpoint.
+fail: Aspire.Hosting.Dashboard.Microsoft.AspNetCore.Server.Kestrel[0]
+      HTTP/2 over TLS was not negotiated on an HTTP/2-only endpoint.
+fail: Aspire.Hosting.Dashboard.Microsoft.AspNetCore.Server.Kestrel[0]
+      HTTP/2 over TLS was not negotiated on an HTTP/2-only endpoint.
+fail: Aspire.Hosting.Dashboard.Microsoft.AspNetCore.Server.Kestrel[0]
+      HTTP/2 over TLS was not negotiated on an HTTP/2-only endpoint.

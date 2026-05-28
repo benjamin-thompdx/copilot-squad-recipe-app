@@ -36,6 +36,7 @@ public static class RecipeEndpoints
         var recipe = await db.Recipes
             .AsNoTracking()
             .Include(r => r.Steps)
+            .Include(r => r.Ingredients)
             .Include(r => r.RecipeTags)
                 .ThenInclude(rt => rt.Tag)
             .FirstOrDefaultAsync(r => r.Id == id, ct);
@@ -76,6 +77,16 @@ public static class RecipeEndpoints
                     Instruction = s.Instruction,
                     TimerMinutes = s.TimerMinutes
                 })
+                .ToList(),
+            Ingredients = (request.Ingredients ?? [])
+                .OrderBy(i => i.Order)
+                .Select(i => new RecipeIngredient
+                {
+                    Order = i.Order,
+                    Name = i.Name,
+                    Amount = i.Amount,
+                    Unit = i.Unit
+                })
                 .ToList()
         };
 
@@ -102,6 +113,7 @@ public static class RecipeEndpoints
     {
         var recipe = await db.Recipes
             .Include(r => r.Steps)
+            .Include(r => r.Ingredients)
             .Include(r => r.RecipeTags)
             .FirstOrDefaultAsync(r => r.Id == id, ct);
 
@@ -136,6 +148,19 @@ public static class RecipeEndpoints
                 StepNumber = s.StepNumber,
                 Instruction = s.Instruction,
                 TimerMinutes = s.TimerMinutes
+            })
+            .ToList();
+
+        db.RecipeIngredients.RemoveRange(recipe.Ingredients);
+        recipe.Ingredients = (request.Ingredients ?? [])
+            .OrderBy(i => i.Order)
+            .Select(i => new RecipeIngredient
+            {
+                RecipeId = recipe.Id,
+                Order = i.Order,
+                Name = i.Name,
+                Amount = i.Amount,
+                Unit = i.Unit
             })
             .ToList();
 
@@ -198,7 +223,7 @@ public static class RecipeEndpoints
         => Enum.TryParse(value, ignoreCase: true, out difficulty)
            && Enum.IsDefined(difficulty);
 
-    private static RecipeDto ToSummaryDto(Recipe r) => new(
+    internal static RecipeDto ToSummaryDto(Recipe r) => new(
         r.Id,
         r.Title,
         r.Description,
@@ -231,6 +256,10 @@ public static class RecipeEndpoints
         r.Steps
             .OrderBy(s => s.StepNumber)
             .Select(s => new RecipeStepDto(s.StepNumber, s.Instruction, s.TimerMinutes))
+            .ToArray(),
+        r.Ingredients
+            .OrderBy(i => i.Order)
+            .Select(i => new RecipeIngredientDto(i.Order, i.Name, i.Amount, i.Unit))
             .ToArray(),
         r.CreatedAt,
         r.UpdatedAt

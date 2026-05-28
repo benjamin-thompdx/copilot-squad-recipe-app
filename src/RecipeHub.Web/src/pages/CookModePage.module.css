@@ -10,7 +10,7 @@
 .back {
   display: inline-block;
   margin-bottom: 0.75rem;
-  color: #4a7fbf;
+  color: var(--color-link);
   text-decoration: none;
   font-size: 0.9rem;
 }
@@ -25,10 +25,10 @@
 }
 
 .instruction {
-  font-size: 1.25rem;
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
   line-height: 1.6;
-  background: #fafafa;
-  border: 1px solid #eee;
+  background: var(--color-instruction-bg);
+  border: 1px solid var(--color-instruction-border);
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
@@ -44,8 +44,8 @@
   gap: 1rem;
   margin-bottom: 1.5rem;
   padding: 0.75rem 1rem;
-  background: #fff8e1;
-  border: 1px solid #f1d98a;
+  background: var(--color-timer-bg);
+  border: 1px solid var(--color-timer-border);
   border-radius: 8px;
 }
 
@@ -69,6 +69,33 @@
 }
 
 .error {
-  color: #a33;
+  color: var(--color-error-text);
   padding: 1rem;
+}
+
+.progress {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border-strong);
+  transition:
+    background var(--dur-s) var(--ease-out),
+    transform var(--dur-s) var(--ease-out);
+}
+
+.dotActive {
+  background: var(--color-primary);
+  transform: scale(1.4);
+}
+
+.dotDone {
+  background: var(--color-text-muted);
 }

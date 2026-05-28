@@ -1,4 +1,9 @@
-import type { KeyboardEvent, ReactNode } from 'react';
+import {
+  memo,
+  type CSSProperties,
+  type KeyboardEvent,
+  type ReactNode,
+} from 'react';
 import styles from './Card.module.css';
 
 export type CardProps = {
@@ -7,9 +12,24 @@ export type CardProps = {
   onClick?: () => void;
   children: ReactNode;
   className?: string;
+  image?: string;
+  imageAlt?: string;
+  /** Accessible label for clickable cards (role="button"). Falls back to title text. */
+  'aria-label'?: string;
+  style?: CSSProperties;
 };
 
-export function Card({ title, footer, onClick, children, className }: CardProps) {
+export const Card = memo(function Card({
+  title,
+  footer,
+  onClick,
+  children,
+  className,
+  image,
+  imageAlt,
+  style,
+  'aria-label': ariaLabel,
+}: CardProps) {
   const clickable = typeof onClick === 'function';
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -27,16 +47,36 @@ export function Card({ title, footer, onClick, children, className }: CardProps)
   return (
     <div
       className={classes}
+      style={style}
       onClick={clickable ? onClick : undefined}
       onKeyDown={clickable ? handleKeyDown : undefined}
       role={clickable ? 'button' : undefined}
       tabIndex={clickable ? 0 : undefined}
+      aria-label={
+        clickable
+          ? (ariaLabel ?? (typeof title === 'string' ? title : undefined))
+          : undefined
+      }
     >
+      {image ? (
+        <div className={styles.imageWrap}>
+          <img
+            src={image}
+            alt={imageAlt ?? title?.toString() ?? ''}
+            className={styles.image}
+            onError={(e) => {
+              (
+                e.currentTarget as HTMLImageElement
+              ).parentElement!.style.display = 'none';
+            }}
+          />
+        </div>
+      ) : null}
       {title ? <div className={styles.title}>{title}</div> : null}
       <div className={styles.body}>{children}</div>
       {footer ? <div className={styles.footer}>{footer}</div> : null}
     </div>
   );
-}
+});
 
 export default Card;

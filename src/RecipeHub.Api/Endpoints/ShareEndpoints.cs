@@ -64,6 +64,7 @@ public static class ShareEndpoints
         var recipe = await db.Recipes
             .AsNoTracking()
             .Include(r => r.Steps)
+            .Include(r => r.Ingredients)
             .Include(r => r.RecipeTags)
                 .ThenInclude(rt => rt.Tag)
             .FirstOrDefaultAsync(r => r.Id == share.RecipeId, ct);
@@ -93,6 +94,10 @@ public static class ShareEndpoints
         r.Steps
             .OrderBy(s => s.StepNumber)
             .Select(s => new RecipeStepDto(s.StepNumber, s.Instruction, s.TimerMinutes))
+            .ToArray(),
+        r.Ingredients
+            .OrderBy(i => i.Order)
+            .Select(i => new RecipeIngredientDto(i.Order, i.Name, i.Amount, i.Unit))
             .ToArray(),
         r.CreatedAt,
         r.UpdatedAt

@@ -1,9 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Card, Spinner } from '../components/ui';
-import { useRecipes } from '../hooks';
+import { Button, Card, DifficultyBadge, Spinner } from '../components/ui';
+import { usePageTitle, useRecipes } from '../hooks';
 import styles from './HomePage.module.css';
 
 export function HomePage() {
+  usePageTitle('Home');
   const navigate = useNavigate();
   const { data, isLoading } = useRecipes();
 
@@ -17,13 +18,13 @@ export function HomePage() {
           Discover, create, and cook your favorite recipes.
         </p>
         <div className={styles.cta}>
-          <Link to="/recipes">
-            <Button variant="primary" size="lg">
+          <Link to='/recipes'>
+            <Button variant='primary' size='lg'>
               Browse Recipes
             </Button>
           </Link>
-          <Link to="/recipes/new">
-            <Button variant="ghost" size="lg">
+          <Link to='/recipes/new'>
+            <Button variant='ghost' size='lg'>
               Add Recipe
             </Button>
           </Link>
@@ -33,7 +34,7 @@ export function HomePage() {
       <section className={styles.featured}>
         <h2>Featured</h2>
         {isLoading ? (
-          <Spinner label="Loading featured recipes…" />
+          <Spinner label='Loading featured recipes…' />
         ) : featured.length === 0 ? (
           <p>No recipes yet. Be the first to add one!</p>
         ) : (
@@ -42,11 +43,14 @@ export function HomePage() {
               <Card
                 key={r.id}
                 title={r.title}
+                image={r.imageUrl ?? undefined}
+                imageAlt={r.title}
                 onClick={() => navigate(`/recipes/${r.id}`)}
               >
                 <p>{r.description ?? 'No description.'}</p>
                 <div className={styles.meta}>
-                  {r.difficulty} · {r.prepTimeMinutes + r.cookTimeMinutes} min
+                  <DifficultyBadge difficulty={r.difficulty} />
+                  <span>{r.prepTimeMinutes + r.cookTimeMinutes} min total</span>
                 </div>
               </Card>
             ))}

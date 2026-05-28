@@ -11,6 +11,7 @@ public record RecipeDetailDto(
     string? ImageUrl,
     string[] TagNames,
     RecipeStepDto[] Steps,
+    RecipeIngredientDto[] Ingredients,
     DateTime CreatedAt,
     DateTime UpdatedAt
 );

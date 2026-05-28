@@ -87,6 +87,35 @@ namespace RecipeHub.Api.Data.Migrations
                     b.ToTable("Recipes");
                 });
 
+            modelBuilder.Entity("RecipeHub.Api.Models.RecipeIngredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Amount")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Unit")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("RecipeIngredients");
+                });
+
             modelBuilder.Entity("RecipeHub.Api.Models.RecipeStep", b =>
                 {
                     b.Property<int>("Id")
@@ -190,6 +219,17 @@ namespace RecipeHub.Api.Data.Migrations
                     b.Navigation("Recipe");
                 });
 
+            modelBuilder.Entity("RecipeHub.Api.Models.RecipeIngredient", b =>
+                {
+                    b.HasOne("RecipeHub.Api.Models.Recipe", "Recipe")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Recipe");
+                });
+
             modelBuilder.Entity("RecipeHub.Api.Models.RecipeStep", b =>
                 {
                     b.HasOne("RecipeHub.Api.Models.Recipe", "Recipe")
@@ -234,6 +274,8 @@ namespace RecipeHub.Api.Data.Migrations
             modelBuilder.Entity("RecipeHub.Api.Models.Recipe", b =>
                 {
                     b.Navigation("Favorites");
+
+                    b.Navigation("Ingredients");
 
                     b.Navigation("RecipeTags");
 

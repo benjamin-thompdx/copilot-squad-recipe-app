@@ -28,6 +28,7 @@ public class Recipe
     public DateTime UpdatedAt { get; set; }
 
     public ICollection<RecipeStep> Steps { get; set; } = new List<RecipeStep>();
+    public List<RecipeIngredient> Ingredients { get; set; } = [];
     public ICollection<RecipeTag> RecipeTags { get; set; } = new List<RecipeTag>();
     public ICollection<ShareToken> ShareTokens { get; set; } = new List<ShareToken>();
     public ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();

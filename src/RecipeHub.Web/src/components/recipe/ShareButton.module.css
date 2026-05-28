@@ -6,11 +6,11 @@
 }
 
 .feedback {
-  color: #2a7a3e;
+  color: var(--color-success-text);
   font-size: 0.9rem;
 }
 
 .error {
-  color: #a33;
+  color: var(--color-error-text);
   font-size: 0.9rem;
 }

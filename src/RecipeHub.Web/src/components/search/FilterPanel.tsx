@@ -11,11 +11,15 @@ export function FilterPanel({ selectedTag, onTagChange }: FilterPanelProps) {
   const { data, isLoading, isError } = useTags();
 
   if (isLoading) {
-    return <Spinner label="Loading tags…" size="sm" />;
+    return <Spinner label='Loading tags…' size='sm' />;
   }
 
   if (isError || !data) {
-    return <div className={styles.error}>Couldn't load tags.</div>;
+    return (
+      <div className={styles.error} role='alert' aria-live='assertive'>
+        Couldn't load tags.
+      </div>
+    );
   }
 
   if (data.length === 0) {
@@ -23,13 +27,13 @@ export function FilterPanel({ selectedTag, onTagChange }: FilterPanelProps) {
   }
 
   return (
-    <div className={styles.panel} role="group" aria-label="Filter by tag">
+    <div className={styles.panel} role='group' aria-label='Filter by tag'>
       {data.map((tag) => {
         const active = selectedTag === tag.name;
         return (
           <button
             key={tag.id}
-            type="button"
+            type='button'
             className={`${styles.chip} ${active ? styles.active : ''}`}
             onClick={() => onTagChange(active ? undefined : tag.name)}
             aria-pressed={active}

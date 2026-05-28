@@ -27,7 +27,7 @@ function resolveBaseUrl(): string {
   }
   if (import.meta.env.DEV) {
     console.warn(
-      '[api] VITE_API_BASE_URL not set; falling back to http://localhost:5000'
+      '[api] VITE_API_BASE_URL not set; falling back to http://localhost:5000',
     );
     return 'http://localhost:5000';
   }
@@ -36,9 +36,18 @@ function resolveBaseUrl(): string {
 
 const BASE_URL = resolveBaseUrl();
 
+function getUserId(): string {
+  let id = localStorage.getItem('recipehub-user-id');
+  if (!id) {
+    id = crypto.randomUUID();
+    localStorage.setItem('recipehub-user-id', id);
+  }
+  return id;
+}
+
 async function request<T>(
   path: string,
-  init: RequestInit & { parseJson?: boolean } = {}
+  init: RequestInit & { parseJson?: boolean } = {},
 ): Promise<T> {
   const { parseJson = true, headers, ...rest } = init;
 
@@ -64,7 +73,8 @@ async function request<T>(
     const message =
       (typeof body === 'object' && body !== null && 'title' in body
         ? String((body as { title: unknown }).title)
-        : undefined) ?? `Request failed: ${response.status} ${response.statusText}`;
+        : undefined) ??
+      `Request failed: ${response.status} ${response.statusText}`;
     throw new ApiError(response.status, message, body);
   }
 
@@ -120,6 +130,26 @@ export const apiClient = {
 
   getSharedRecipe: (token: string): Promise<RecipeDetail> =>
     request<RecipeDetail>(`/api/shared/${encodeURIComponent(token)}`),
+
+  listFavorites: (): Promise<Recipe[]> =>
+    request<Recipe[]>('/api/favorites', {
+      headers: { 'X-User-Id': getUserId() },
+    }),
+
+  addFavorite: (recipeId: number): Promise<void> =>
+    request<void>('/api/favorites', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-User-Id': getUserId() },
+      body: JSON.stringify({ recipeId }),
+      parseJson: false,
+    }),
+
+  removeFavorite: (recipeId: number): Promise<void> =>
+    request<void>(`/api/favorites/${recipeId}`, {
+      method: 'DELETE',
+      headers: { 'X-User-Id': getUserId() },
+      parseJson: false,
+    }),
 };
 
 export type ApiClient = typeof apiClient;

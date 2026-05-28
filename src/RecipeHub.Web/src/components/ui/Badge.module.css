@@ -11,25 +11,31 @@
 }
 
 .default {
-  background-color: #f3f4f6;
-  color: #374151;
-  border-color: #e5e7eb;
+  background-color: var(--color-badge-default-bg);
+  color: var(--color-badge-default-text);
+  border-color: var(--color-badge-default-border);
 }
 
 .success {
-  background-color: #ecfdf5;
-  color: #065f46;
-  border-color: #a7f3d0;
+  background-color: var(--color-badge-success-bg);
+  color: var(--color-badge-success-text);
+  border-color: var(--color-badge-success-border);
 }
 
 .warning {
-  background-color: #fffbeb;
-  color: #92400e;
-  border-color: #fde68a;
+  background-color: var(--color-badge-warning-bg);
+  color: var(--color-badge-warning-text);
+  border-color: var(--color-badge-warning-border);
 }
 
 .info {
-  background-color: #eff6ff;
-  color: #1e40af;
-  border-color: #bfdbfe;
+  background-color: var(--color-badge-info-bg);
+  color: var(--color-badge-info-text);
+  border-color: var(--color-badge-info-border);
+}
+
+.danger {
+  background-color: var(--color-error-bg);
+  color: var(--color-error-text);
+  border: 1px solid var(--color-error-border);
 }

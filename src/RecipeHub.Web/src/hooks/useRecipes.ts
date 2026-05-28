@@ -12,7 +12,10 @@ export function useRecipes() {
 
 export function useRecipe(id: number | undefined) {
   return useQuery<RecipeDetail>({
-    queryKey: id !== undefined ? recipeKeys.detail(id) : ['recipes', 'detail', 'disabled'],
+    queryKey:
+      id !== undefined
+        ? recipeKeys.detail(id)
+        : ['recipes', 'detail', 'disabled'],
     queryFn: () => apiClient.getRecipe(id as number),
     enabled: typeof id === 'number' && Number.isFinite(id),
   });

@@ -20,9 +20,9 @@
 .field select,
 .field textarea {
   padding: 0.5rem 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-input-border);
   border-radius: 6px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: inherit;
 }
 
@@ -48,10 +48,11 @@
   gap: 0.35rem;
   align-items: center;
   padding: 0.25rem 0.6rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-input-border);
   border-radius: 999px;
   font-size: 0.85rem;
   cursor: pointer;
+  color: var(--color-text);
 }
 
 .tagCheck input {
@@ -73,7 +74,7 @@
 
 .stepNumber {
   font-weight: 600;
-  color: #666;
+  color: var(--color-text-muted);
   width: 1.5rem;
   text-align: right;
 }
@@ -81,7 +82,7 @@
 .stepRow input[type='text'],
 .stepRow input[type='number'] {
   padding: 0.4rem 0.6rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-input-border);
   border-radius: 6px;
   font-size: 0.9rem;
 }
@@ -93,14 +94,40 @@
 }
 
 .error {
-  color: #a33;
+  color: var(--color-error-text);
   font-size: 0.85rem;
 }
 
 .submitError {
-  color: #a33;
+  color: var(--color-error-text);
   padding: 0.5rem;
-  border: 1px solid #f5c0c0;
+  border: 1px solid var(--color-error-border);
   border-radius: 6px;
-  background: #fdecec;
+  background: var(--color-error-bg);
+}
+
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ingredientRow {
+  display: grid;
+  grid-template-columns: 90px 80px 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.ingredientRow input[type='text'] {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--color-input-border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.ingredientName {
+  /* full width handled by grid */
 }

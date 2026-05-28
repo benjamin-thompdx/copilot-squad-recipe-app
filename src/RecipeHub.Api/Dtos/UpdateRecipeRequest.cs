@@ -11,5 +11,6 @@ public record UpdateRecipeRequest(
     int Servings,
     string? ImageUrl,
     string[] Tags,
-    RecipeStepDto[] Steps
+    RecipeStepDto[] Steps,
+    RecipeIngredientDto[]? Ingredients = null
 );

@@ -31,7 +31,11 @@ function wrapper() {
   );
 }
 
-function makeStep(stepNumber: number, total: number, instruction: string): CookModeDto {
+function makeStep(
+  stepNumber: number,
+  total: number,
+  instruction: string,
+): CookModeDto {
   return {
     recipeId: 1,
     totalSteps: total,

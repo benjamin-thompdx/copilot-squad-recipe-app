@@ -5,3 +5,4 @@ export { RecipeEditPage } from './RecipeEditPage';
 export { FavoritesPage } from './FavoritesPage';
 export { CookModePage } from './CookModePage';
 export { SharedRecipePage } from './SharedRecipePage';
+export { NotFoundPage } from './NotFoundPage';

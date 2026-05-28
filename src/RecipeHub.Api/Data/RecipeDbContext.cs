@@ -8,6 +8,7 @@ public class RecipeDbContext(DbContextOptions<RecipeDbContext> options) : DbCont
 {
     public DbSet<Recipe> Recipes => Set<Recipe>();
     public DbSet<RecipeStep> RecipeSteps => Set<RecipeStep>();
+    public DbSet<RecipeIngredient> RecipeIngredients => Set<RecipeIngredient>();
     public DbSet<Tag> Tags => Set<Tag>();
     public DbSet<RecipeTag> RecipeTags => Set<RecipeTag>();
     public DbSet<ShareToken> ShareTokens => Set<ShareToken>();
@@ -40,6 +41,11 @@ public class RecipeDbContext(DbContextOptions<RecipeDbContext> options) : DbCont
             entity.HasMany(r => r.Steps)
                 .WithOne(s => s.Recipe!)
                 .HasForeignKey(s => s.RecipeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasMany(r => r.Ingredients)
+                .WithOne(i => i.Recipe!)
+                .HasForeignKey(i => i.RecipeId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasMany(r => r.RecipeTags)

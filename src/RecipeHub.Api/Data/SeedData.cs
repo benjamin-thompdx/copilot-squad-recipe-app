@@ -5,7 +5,7 @@ namespace RecipeHub.Api.Data;
 
 /// <summary>
 /// Hackathon seed data per <c>docs/data-assessment.md</c> §3.
-/// Populates Tags (10), Recipes (12), RecipeSteps (~71), and RecipeTags (~26)
+/// Populates Tags (10), Recipes (12), RecipeSteps (~71), RecipeIngredients, and RecipeTags (~26)
 /// idempotently. ShareTokens and Favorites are intentionally left empty.
 /// </summary>
 public static class SeedData
@@ -23,8 +23,6 @@ public static class SeedData
         var now = DateTime.UtcNow;
 
         // --- Tags ---------------------------------------------------------
-        // Use the exact 10 tags from data-assessment.md §3.1. Insertion order
-        // matters for readability only; EF assigns Ids.
         var tagNames = new[]
         {
             "Breakfast",
@@ -41,8 +39,6 @@ public static class SeedData
 
         var tags = tagNames.ToDictionary(name => name, name => new Tag { Name = name });
 
-        // Upsert tags: only add ones that aren't already in the DB (handles the
-        // edge case where tags were seeded by a prior partial run).
         var existingTagNames = db.Tags.Select(t => t.Name).ToHashSet(StringComparer.Ordinal);
         foreach (var (name, tag) in tags)
         {
@@ -65,17 +61,18 @@ public static class SeedData
                 title: "Classic Margherita Pizza",
                 description: "A Neapolitan classic: blistered crust, bright San Marzano tomato sauce, fresh mozzarella, and torn basil. Simple ingredients that rely on good technique and a very hot oven.",
                 prep: 30, cook: 15, servings: 4, difficulty: Difficulty.Medium,
-                ingredients: """
-                    500g (4 cups) 00 or bread flour
-                    325ml (1 1/3 cups) warm water
-                    10g (2 tsp) fine sea salt
-                    2g (3/4 tsp) instant yeast
-                    400g can whole San Marzano tomatoes, crushed by hand
-                    250g fresh mozzarella (preferably fior di latte), torn
-                    1 bunch fresh basil
-                    Extra-virgin olive oil, for finishing
-                    Flaky sea salt, to taste
-                    """,
+                ingredients: new (string Name, string? Amount, string? Unit)[]
+                {
+                    ("00 or bread flour", "500g", null),
+                    ("warm water", "325ml", null),
+                    ("fine sea salt", "10g", null),
+                    ("instant yeast", "2g", null),
+                    ("whole San Marzano tomatoes, crushed by hand", "400g", null),
+                    ("fresh mozzarella (fior di latte), torn", "250g", null),
+                    ("fresh basil", "1", "bunch"),
+                    ("extra-virgin olive oil", null, null),
+                    ("flaky sea salt", null, null),
+                },
                 tagNames: new[] { "Italian", "Dinner" },
                 steps: new (string Instruction, int? Timer)[]
                 {
@@ -92,18 +89,19 @@ public static class SeedData
                 title: "Fluffy Pancakes",
                 description: "Tall, tender buttermilk pancakes with crisp golden edges. Resting the batter while the pan heats is the secret to the signature fluff.",
                 prep: 10, cook: 15, servings: 4, difficulty: Difficulty.Easy,
-                ingredients: """
-                    2 cups all-purpose flour
-                    2 tbsp sugar
-                    2 tsp baking powder
-                    1/2 tsp baking soda
-                    1/2 tsp fine salt
-                    2 cups buttermilk
-                    2 large eggs
-                    3 tbsp unsalted butter, melted, plus more for the pan
-                    1 tsp vanilla extract
-                    Maple syrup, for serving
-                    """,
+                ingredients: new (string Name, string? Amount, string? Unit)[]
+                {
+                    ("all-purpose flour", "2", "cups"),
+                    ("sugar", "2", "tbsp"),
+                    ("baking powder", "2", "tsp"),
+                    ("baking soda", "1/2", "tsp"),
+                    ("fine salt", "1/2", "tsp"),
+                    ("buttermilk", "2", "cups"),
+                    ("large eggs", "2", null),
+                    ("unsalted butter, melted", "3", "tbsp"),
+                    ("vanilla extract", "1", "tsp"),
+                    ("maple syrup, for serving", null, null),
+                },
                 tagNames: new[] { "Breakfast", "Quick" },
                 steps: new (string Instruction, int? Timer)[]
                 {
@@ -119,17 +117,18 @@ public static class SeedData
                 title: "Chicken Alfredo Pasta",
                 description: "Creamy, cheesy fettuccine with seared chicken. The sauce comes together quickly, so have the pasta water boiling before you start the chicken.",
                 prep: 15, cook: 25, servings: 4, difficulty: Difficulty.Medium,
-                ingredients: """
-                    1 lb (450g) fettuccine
-                    2 boneless, skinless chicken breasts
-                    1 tbsp olive oil
-                    4 tbsp unsalted butter
-                    4 cloves garlic, minced
-                    1 1/2 cups heavy cream
-                    1 1/2 cups finely grated Parmigiano-Reggiano
-                    Salt and freshly ground black pepper
-                    Chopped parsley, for serving
-                    """,
+                ingredients: new (string Name, string? Amount, string? Unit)[]
+                {
+                    ("fettuccine", "450g", null),
+                    ("boneless skinless chicken breasts", "2", null),
+                    ("olive oil", "1", "tbsp"),
+                    ("unsalted butter", "4", "tbsp"),
+                    ("garlic, minced", "4", "cloves"),
+                    ("heavy cream", "1 1/2", "cups"),
+                    ("Parmigiano-Reggiano, finely grated", "1 1/2", "cups"),
+                    ("salt and freshly ground black pepper", null, null),
+                    ("chopped parsley, for serving", null, null),
+                },
                 tagNames: new[] { "Italian", "Dinner" },
                 steps: new (string Instruction, int? Timer)[]
                 {
@@ -147,19 +146,20 @@ public static class SeedData
                 title: "Thai Green Curry",
                 description: "Fragrant, coconut-rich curry with chicken and Thai basil. Frying the curry paste in thick coconut cream is what builds the signature depth.",
                 prep: 20, cook: 20, servings: 4, difficulty: Difficulty.Medium,
-                ingredients: """
-                    1 lb (450g) boneless, skinless chicken thighs, sliced
-                    2 tbsp Thai green curry paste
-                    1 can (400ml) full-fat coconut milk
-                    1 cup chicken stock
-                    1 Thai eggplant or 1/2 regular eggplant, cubed
-                    1 red bell pepper, sliced
-                    1 tbsp fish sauce
-                    2 tsp palm or brown sugar
-                    1 handful Thai basil leaves
-                    1 lime, cut into wedges
-                    Steamed jasmine rice, for serving
-                    """,
+                ingredients: new (string Name, string? Amount, string? Unit)[]
+                {
+                    ("boneless skinless chicken thighs, sliced", "450g", null),
+                    ("Thai green curry paste", "2", "tbsp"),
+                    ("full-fat coconut milk", "400ml", null),
+                    ("chicken stock", "1", "cup"),
+                    ("Thai eggplant, cubed", "1", null),
+                    ("red bell pepper, sliced", "1", null),
+                    ("fish sauce", "1", "tbsp"),
+                    ("palm or brown sugar", "2", "tsp"),
+                    ("Thai basil leaves", "1", "handful"),
+                    ("lime, cut into wedges", "1", null),
+                    ("steamed jasmine rice, for serving", null, null),
+                },
                 tagNames: new[] { "Asian", "Dinner" },
                 steps: new (string Instruction, int? Timer)[]
                 {
@@ -176,15 +176,16 @@ public static class SeedData
                 title: "Avocado Toast",
                 description: "A crunchy, creamy five-minute breakfast. Good bread and a ripe avocado do the heavy lifting.",
                 prep: 5, cook: 3, servings: 2, difficulty: Difficulty.Easy,
-                ingredients: """
-                    2 thick slices sourdough or country bread
-                    1 ripe avocado
-                    1/2 lemon, juiced
-                    Flaky sea salt
-                    Freshly ground black pepper
-                    Red pepper flakes, to taste
-                    Extra-virgin olive oil, for drizzling
-                    """,
+                ingredients: new (string Name, string? Amount, string? Unit)[]
+                {
+                    ("sourdough or country bread, thick slices", "2", "slices"),
+                    ("ripe avocado", "1", null),
+                    ("lemon, juiced", "1/2", null),
+                    ("flaky sea salt", null, null),
+                    ("freshly ground black pepper", null, null),
+                    ("red pepper flakes", null, null),
+                    ("extra-virgin olive oil", null, null),
+                },
                 tagNames: new[] { "Breakfast", "Vegetarian", "Quick" },
                 steps: new (string Instruction, int? Timer)[]
                 {
@@ -199,18 +200,19 @@ public static class SeedData
                 title: "Beef Tacos",
                 description: "Weeknight-friendly seasoned ground beef tacos with warm corn tortillas and fresh toppings. Toast the tortillas directly over the flame if you have a gas burner.",
                 prep: 15, cook: 10, servings: 4, difficulty: Difficulty.Easy,
-                ingredients: """
-                    1 lb (450g) ground beef (80/20)
-                    1 small yellow onion, finely chopped
-                    2 cloves garlic, minced
-                    2 tsp chili powder
-                    1 tsp ground cumin
-                    1/2 tsp smoked paprika
-                    1/2 tsp dried oregano
-                    Salt and pepper
-                    8 small corn tortillas
-                    Diced tomato, shredded lettuce, cotija cheese, and lime wedges, for serving
-                    """,
+                ingredients: new (string Name, string? Amount, string? Unit)[]
+                {
+                    ("ground beef (80/20)", "450g", null),
+                    ("small yellow onion, finely chopped", "1", null),
+                    ("garlic, minced", "2", "cloves"),
+                    ("chili powder", "2", "tsp"),
+                    ("ground cumin", "1", "tsp"),
+                    ("smoked paprika", "1/2", "tsp"),
+                    ("dried oregano", "1/2", "tsp"),
+                    ("salt and pepper", null, null),
+                    ("small corn tortillas", "8", null),
+                    ("diced tomato, shredded lettuce, cotija cheese, and lime wedges", null, null),
+                },
                 tagNames: new[] { "Mexican", "Dinner" },
                 steps: new (string Instruction, int? Timer)[]
                 {
@@ -226,17 +228,18 @@ public static class SeedData
                 title: "Chocolate Lava Cake",
                 description: "Individual chocolate cakes with a molten, flowing center. Timing is everything — pull them when the edges are set but the middle still jiggles.",
                 prep: 20, cook: 14, servings: 4, difficulty: Difficulty.Hard,
-                ingredients: """
-                    6 oz (170g) bittersweet chocolate, chopped
-                    1/2 cup (113g) unsalted butter, plus more for the ramekins
-                    2 tbsp cocoa powder, plus more for dusting
-                    2 large eggs
-                    2 large egg yolks
-                    1/4 cup (50g) granulated sugar
-                    Pinch of fine salt
-                    2 tbsp all-purpose flour
-                    Vanilla ice cream or whipped cream, for serving
-                    """,
+                ingredients: new (string Name, string? Amount, string? Unit)[]
+                {
+                    ("bittersweet chocolate, chopped", "170g", null),
+                    ("unsalted butter, plus more for ramekins", "113g", null),
+                    ("cocoa powder, plus more for dusting", "2", "tbsp"),
+                    ("large eggs", "2", null),
+                    ("large egg yolks", "2", null),
+                    ("granulated sugar", "50g", null),
+                    ("fine salt", "1", "pinch"),
+                    ("all-purpose flour", "2", "tbsp"),
+                    ("vanilla ice cream or whipped cream, for serving", null, null),
+                },
                 tagNames: new[] { "Dessert" },
                 steps: new (string Instruction, int? Timer)[]
                 {
@@ -255,20 +258,21 @@ public static class SeedData
                 title: "Vegetable Stir-Fry",
                 description: "Fast, crisp-tender vegetables in a glossy soy-ginger sauce. Have everything prepped before the wok hits the heat.",
                 prep: 15, cook: 10, servings: 4, difficulty: Difficulty.Easy,
-                ingredients: """
-                    2 tbsp neutral oil
-                    1 tbsp fresh ginger, minced
-                    3 cloves garlic, minced
-                    1 broccoli crown, cut into florets
-                    1 red bell pepper, sliced
-                    1 large carrot, thinly sliced on a bias
-                    1 cup snow peas
-                    3 tbsp soy sauce or tamari
-                    1 tbsp rice vinegar
-                    1 tsp toasted sesame oil
-                    1 tsp cornstarch mixed with 2 tbsp water
-                    Steamed rice, for serving
-                    """,
+                ingredients: new (string Name, string? Amount, string? Unit)[]
+                {
+                    ("neutral oil", "2", "tbsp"),
+                    ("fresh ginger, minced", "1", "tbsp"),
+                    ("garlic, minced", "3", "cloves"),
+                    ("broccoli crown, cut into florets", "1", null),
+                    ("red bell pepper, sliced", "1", null),
+                    ("large carrot, thinly sliced on a bias", "1", null),
+                    ("snow peas", "1", "cup"),
+                    ("soy sauce or tamari", "3", "tbsp"),
+                    ("rice vinegar", "1", "tbsp"),
+                    ("toasted sesame oil", "1", "tsp"),
+                    ("cornstarch mixed with 2 tbsp water", "1", "tsp"),
+                    ("steamed rice, for serving", null, null),
+                },
                 tagNames: new[] { "Asian", "Vegetarian", "Vegan", "Quick" },
                 steps: new (string Instruction, int? Timer)[]
                 {
@@ -284,21 +288,22 @@ public static class SeedData
                 title: "French Onion Soup",
                 description: "Deeply caramelized onions in rich beef broth, topped with a toasted baguette and a blanket of bubbling Gruyère. A patient recipe that rewards every minute.",
                 prep: 15, cook: 60, servings: 4, difficulty: Difficulty.Hard,
-                ingredients: """
-                    3 tbsp unsalted butter
-                    1 tbsp olive oil
-                    2 1/2 lbs (1.1kg) yellow onions, thinly sliced
-                    1 tsp fine salt, plus more to taste
-                    1 tsp sugar
-                    2 cloves garlic, minced
-                    1/2 cup dry white wine
-                    2 tbsp all-purpose flour
-                    6 cups rich beef stock
-                    2 sprigs fresh thyme
-                    1 bay leaf
-                    4 thick slices baguette, toasted
-                    1 1/2 cups grated Gruyère cheese
-                    """,
+                ingredients: new (string Name, string? Amount, string? Unit)[]
+                {
+                    ("unsalted butter", "3", "tbsp"),
+                    ("olive oil", "1", "tbsp"),
+                    ("yellow onions, thinly sliced", "1.1kg", null),
+                    ("fine salt", "1", "tsp"),
+                    ("sugar", "1", "tsp"),
+                    ("garlic, minced", "2", "cloves"),
+                    ("dry white wine", "1/2", "cup"),
+                    ("all-purpose flour", "2", "tbsp"),
+                    ("rich beef stock", "6", "cups"),
+                    ("fresh thyme sprigs", "2", null),
+                    ("bay leaf", "1", null),
+                    ("baguette slices, toasted", "4", null),
+                    ("Gruyère cheese, grated", "1 1/2", "cups"),
+                },
                 tagNames: new[] { "Dinner" },
                 steps: new (string Instruction, int? Timer)[]
                 {
@@ -316,15 +321,16 @@ public static class SeedData
                 title: "Berry Smoothie Bowl",
                 description: "A thick, spoonable smoothie topped with crunchy granola and fresh fruit. Freeze the banana ahead of time for the best texture.",
                 prep: 10, cook: 0, servings: 2, difficulty: Difficulty.Easy,
-                ingredients: """
-                    1 1/2 cups frozen mixed berries
-                    1 frozen banana, broken into chunks
-                    1/2 cup Greek yogurt
-                    1/4 cup milk or plant milk, plus more as needed
-                    1 tbsp honey or maple syrup
-                    1/2 cup granola
-                    Fresh berries, sliced banana, and chia seeds, for topping
-                    """,
+                ingredients: new (string Name, string? Amount, string? Unit)[]
+                {
+                    ("frozen mixed berries", "1 1/2", "cups"),
+                    ("frozen banana, broken into chunks", "1", null),
+                    ("Greek yogurt", "1/2", "cup"),
+                    ("milk or plant milk", "1/4", "cup"),
+                    ("honey or maple syrup", "1", "tbsp"),
+                    ("granola", "1/2", "cup"),
+                    ("fresh berries, sliced banana, and chia seeds, for topping", null, null),
+                },
                 tagNames: new[] { "Breakfast", "Vegetarian", "Quick" },
                 steps: new (string Instruction, int? Timer)[]
                 {
@@ -339,18 +345,19 @@ public static class SeedData
                 title: "Homemade Sushi Rolls",
                 description: "Classic cucumber-avocado and salmon maki made with properly seasoned sushi rice. Keep your hands and knife damp to prevent sticking.",
                 prep: 45, cook: 20, servings: 4, difficulty: Difficulty.Hard,
-                ingredients: """
-                    2 cups short-grain sushi rice
-                    2 1/2 cups water
-                    1/4 cup rice vinegar
-                    2 tbsp sugar
-                    1 tsp fine salt
-                    4 sheets nori
-                    1/2 lb sushi-grade salmon, cut into long strips
-                    1/2 English cucumber, julienned
-                    1 ripe avocado, sliced
-                    Soy sauce, pickled ginger, and wasabi, for serving
-                    """,
+                ingredients: new (string Name, string? Amount, string? Unit)[]
+                {
+                    ("short-grain sushi rice", "2", "cups"),
+                    ("water", "2 1/2", "cups"),
+                    ("rice vinegar", "1/4", "cup"),
+                    ("sugar", "2", "tbsp"),
+                    ("fine salt", "1", "tsp"),
+                    ("nori sheets", "4", null),
+                    ("sushi-grade salmon, cut into long strips", "225g", null),
+                    ("English cucumber, julienned", "1/2", null),
+                    ("ripe avocado, sliced", "1", null),
+                    ("soy sauce, pickled ginger, and wasabi, for serving", null, null),
+                },
                 tagNames: new[] { "Asian", "Dinner" },
                 steps: new (string Instruction, int? Timer)[]
                 {
@@ -369,16 +376,17 @@ public static class SeedData
                 title: "Tiramisu",
                 description: "Classic no-bake Italian dessert with espresso-soaked ladyfingers and clouds of mascarpone cream. Build it the day before so the flavors have time to settle.",
                 prep: 30, cook: 0, servings: 8, difficulty: Difficulty.Medium,
-                ingredients: """
-                    4 large eggs, separated
-                    1/2 cup granulated sugar
-                    1 lb (450g) mascarpone, at room temperature
-                    1 3/4 cups strong brewed espresso, cooled
-                    3 tbsp coffee liqueur (optional)
-                    24 ladyfinger cookies (savoiardi)
-                    2 tbsp unsweetened cocoa powder
-                    Shaved dark chocolate, for serving
-                    """,
+                ingredients: new (string Name, string? Amount, string? Unit)[]
+                {
+                    ("large eggs, separated", "4", null),
+                    ("granulated sugar", "1/2", "cup"),
+                    ("mascarpone, at room temperature", "450g", null),
+                    ("strong brewed espresso, cooled", "1 3/4", "cups"),
+                    ("coffee liqueur (optional)", "3", "tbsp"),
+                    ("ladyfinger cookies (savoiardi)", "24", null),
+                    ("unsweetened cocoa powder", "2", "tbsp"),
+                    ("shaved dark chocolate, for serving", null, null),
+                },
                 tagNames: new[] { "Italian", "Dessert" },
                 steps: new (string Instruction, int? Timer)[]
                 {
@@ -395,12 +403,6 @@ public static class SeedData
         // Attach RecipeTag join rows using the actual Tag entities.
         foreach (var recipe in recipes)
         {
-            foreach (var rt in recipe.RecipeTags)
-            {
-                // Tag reference set during BuildRecipe via closure dictionary.
-                // Nothing extra needed here; EF will insert the join row.
-            }
-
             db.Recipes.Add(recipe);
         }
 
@@ -414,20 +416,15 @@ public static class SeedData
             int cook,
             int servings,
             Difficulty difficulty,
-            string ingredients,
+            (string Name, string? Amount, string? Unit)[] ingredients,
             string[] tagNames,
             (string Instruction, int? Timer)[] steps,
             DateTime now)
         {
-            // Description includes a trailing "Ingredients" block so the single
-            // text field carries both blurb and ingredient list (no dedicated
-            // Ingredients table exists in the schema).
-            var fullDescription = $"{description}\n\nIngredients:\n{ingredients.Trim()}";
-
             var recipe = new Recipe
             {
                 Title = title,
-                Description = fullDescription,
+                Description = description,
                 PrepTimeMinutes = prep,
                 CookTimeMinutes = cook,
                 Servings = servings,
@@ -443,6 +440,17 @@ public static class SeedData
                     StepNumber = i + 1,
                     Instruction = steps[i].Instruction,
                     TimerMinutes = steps[i].Timer,
+                });
+            }
+
+            for (var i = 0; i < ingredients.Length; i++)
+            {
+                recipe.Ingredients.Add(new RecipeIngredient
+                {
+                    Order = i + 1,
+                    Name = ingredients[i].Name,
+                    Amount = ingredients[i].Amount,
+                    Unit = ingredients[i].Unit,
                 });
             }
 

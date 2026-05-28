@@ -8,7 +8,9 @@ export interface UseTimerResult {
   reset: () => void;
 }
 
-export function useTimer(totalMinutes: number | null | undefined): UseTimerResult {
+export function useTimer(
+  totalMinutes: number | null | undefined,
+): UseTimerResult {
   const initialSeconds = Math.max(0, Math.round((totalMinutes ?? 0) * 60));
   const [remainingSeconds, setRemainingSeconds] = useState(initialSeconds);
   const [isRunning, setIsRunning] = useState(false);

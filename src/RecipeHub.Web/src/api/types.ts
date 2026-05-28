@@ -21,8 +21,16 @@ export interface RecipeStep {
   timerMinutes: number | null;
 }
 
+export interface RecipeIngredient {
+  order: number;
+  name: string;
+  amount: string | null;
+  unit: string | null;
+}
+
 export interface RecipeDetail extends Recipe {
   steps: RecipeStep[];
+  ingredients: RecipeIngredient[];
   createdAt: string;
   updatedAt: string;
 }
@@ -37,6 +45,7 @@ export interface CreateRecipeRequest {
   imageUrl: string | null;
   tags: string[];
   steps: RecipeStep[];
+  ingredients: RecipeIngredient[];
 }
 
 export type UpdateRecipeRequest = CreateRecipeRequest;

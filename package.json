@@ -14,7 +14,14 @@
   "author": "Zack Way",
   "type": "commonjs",
   "main": "index.js",
+  "scripts": {
+    "prepare": "husky",
+    "lint": "node scripts/lint-all.js"
+  },
   "directories": {
     "test": "tests"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
   }
 }

@@ -30,3 +30,5 @@ pnpm-debug.log*
 # Env / secrets
 *.env
 *.env.local
+# Squad: ignore runtime state (logs, inbox, sessions)
+.squad/.scratch/

@@ -7,24 +7,29 @@
   margin-bottom: 1rem;
 }
 
-.search {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  min-width: 240px;
-  flex: 1;
-  max-width: 420px;
-}
-
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.recipeCard {
+  animation: fadeSlideIn var(--dur-m) var(--ease-out) both;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .description {
-  color: #444;
+  color: var(--color-text-2);
   font-size: 0.9rem;
   line-height: 1.4;
   display: -webkit-box;
@@ -42,19 +47,91 @@
 }
 
 .meta {
-  color: #666;
+  color: var(--color-text-muted);
   font-size: 0.85rem;
   display: flex;
   justify-content: space-between;
 }
 
-.empty,
-.error {
-  padding: 2rem;
+/* Empty state */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 2rem;
   text-align: center;
-  color: #666;
 }
 
-.error {
-  color: #a33;
+.emptyIcon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.emptyDetail {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+/* Error state */
+.errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.errorIcon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.errorTitle {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-error-text);
+}
+
+.errorDetail {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  max-width: 36ch;
+}
+
+.retryButton {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border: 1px solid var(--color-primary);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-s) var(--ease-out),
+    border-color var(--dur-s) var(--ease-out);
+}
+
+.retryButton:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.retryButton:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
