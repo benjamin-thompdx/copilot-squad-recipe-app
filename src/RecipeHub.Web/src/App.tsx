@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import { useTheme } from './hooks';
+import { PixelBackground } from './components/ui';
 import styles from './App.module.css';
 import './App.css';
 
@@ -37,6 +38,7 @@ function App() {
 
   return (
     <div className={styles.app}>
+      <PixelBackground />
       <nav className={styles.nav} aria-label='Main navigation'>
         <NavLink to='/' className={styles.brand}>
           RecipeHub

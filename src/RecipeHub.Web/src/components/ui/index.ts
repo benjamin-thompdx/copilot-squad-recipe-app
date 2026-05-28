@@ -15,4 +15,4 @@ export type { SkeletonCardProps } from './SkeletonCard';
 
 export { DifficultyBadge } from './DifficultyBadge';
 
-export { FavoriteButton } from './FavoriteButton';
+export { PixelBackground } from './PixelBackground';
