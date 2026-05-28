@@ -69,6 +69,43 @@
 
 **Why:** Difficulty field was unstyled text; CSS modules had spacing/style inconsistencies including hardcoded spinner colors, sticky nav missing, error state missing visual card treatment, and border-radius mismatches between form inputs.
 
+### 2026-05-28: Backend improvements — favorites API and ingredients table
+**By:** Feathers McGraw (Backend Dev)
+**What:** Implemented headless favorites API using X-User-Id header; refactored ingredients from embedded text to first-class table
+**Decisions:**
+1. **Favorites API via X-User-Id Header** — App has no authentication; frontend generates UUID (stored in localStorage) and passes as `X-User-Id` header. All favorites endpoints read this header, return 400 if missing. Idempotent POST for duplicates.
+2. **RecipeIngredient as First-Class Table** — Ingredients moved from `Description` raw text to dedicated `RecipeIngredients` table (Order, Name, Amount?, Unit?) with cascade-delete FK to Recipes.
+3. **Ingredients Optional on Create/Update** — `CreateRecipeRequest.Ingredients` and `UpdateRecipeRequest.Ingredients` are nullable. Existing calls without the field continue to work.
+4. **RecipeDetailDto Extended** — `RecipeDetailDto` gains `Ingredients` array; `RecipeDto` (used in lists) remains unchanged to avoid breaking frontend.
+
+### 2026-05-28: Frontend improvements — API-backed favorites and UX enhancements
+**By:** Gromit (Frontend Dev)
+**What:** Switched favorites from localStorage to API-backed; added skeleton loaders, page title hook, ingredients UI, NotFound route, cook mode progress dots
+**Decisions:**
+1. **Favorites: API-backed with X-User-Id** — Use `GET/POST/DELETE /api/favorites` with `X-User-Id` header (UUID persisted in localStorage). Replaces previous client-only approach.
+2. **Skeleton over Spinner in RecipeDetailPage** — Replace `<Spinner>` with `<RecipeDetailSkeleton>` to reduce layout shift and better communicate content structure.
+3. **usePageTitle Hook** — Centralize document title management across all pages. Format: `"${title} — RecipeHub"` or `"RecipeHub"` if empty.
+4. **Ingredients in Types and Forms** — Added `RecipeIngredient { order, name, amount, unit }` to types and form with grid layout (amount 90px / unit 80px / name flex).
+5. **404 Route with NotFoundPage** — Add `<Route path="*" element={<NotFoundPage />} />` using lazy import pattern.
+6. **CookMode Step Dots** — Add visual step progress dots above instructions. Active dot uses `--color-primary` with `scale(1.4)`; done dots use `--color-text-muted`.
+
+### 2026-05-28: Test coverage and bug fixes — Wendolene Ramsbottom
+**By:** Wendolene Ramsbottom (QA/Testing)
+**What:** Created comprehensive test suites for hooks and API endpoints; fixed silent API break in ShareEndpoints
+**Files created:**
+- `src/RecipeHub.Web/src/hooks/__tests__/useTimer.test.ts` (10 tests, all passing)
+- `src/RecipeHub.Web/src/hooks/__tests__/useSearch.test.tsx` (7 tests, all passing)
+- `tests/RecipeHub.Api.Tests/RecipeEndpointTests.cs` (7 tests, all passing)
+
+**Bugs fixed:**
+- `ShareEndpoints.cs:ToDetailDto` — Missing `.Include(r => r.Ingredients)` in EF query; added mapping to prevent empty ingredients array in shared recipes.
+
+**Observations:**
+1. `Results.ValidationProblem` returns HTTP 400 (not 422) in .NET 10 minimal APIs.
+2. Running Aspire locks `bin/Debug` binaries; backend tests must use `-c Release` or stop dev server.
+3. No new npm packages required; all test utilities already in `devDependencies`.
+4. `useTimer` fake timer tests require wrapping both `vi.advanceTimersByTime` and state callbacks in `act()` for determinism.
+
 ## Governance
 
 - All meaningful changes require team consensus

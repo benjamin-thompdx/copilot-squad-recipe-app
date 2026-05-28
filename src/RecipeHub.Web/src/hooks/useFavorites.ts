@@ -22,3 +22,23 @@ export function useToggleFavorite() {
   });
   return { add, remove };
 }
+
+/** Composite hook: provides `isFavorite(id)` and `toggle(id)` helpers. */
+export function useFavoritesActions() {
+  const { data: favorites = [] } = useFavorites();
+  const { add, remove } = useToggleFavorite();
+
+  const favoriteIds = new Set(favorites.map((f) => f.id));
+
+  const isFavorite = (id: number) => favoriteIds.has(id);
+
+  const toggle = (id: number) => {
+    if (isFavorite(id)) {
+      remove.mutate(id);
+    } else {
+      add.mutate(id);
+    }
+  };
+
+  return { isFavorite, toggle };
+}

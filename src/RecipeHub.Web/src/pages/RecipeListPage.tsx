@@ -8,7 +8,12 @@ import {
   SkeletonCard,
 } from '../components/ui';
 import { FilterPanel, SearchBar } from '../components/search';
-import { useFavorites, usePageTitle, useRecipes, useSearch } from '../hooks';
+import {
+  useFavoritesActions,
+  usePageTitle,
+  useRecipes,
+  useSearch,
+} from '../hooks';
 import type { Recipe } from '../api';
 import styles from './RecipeListPage.module.css';
 
@@ -26,7 +31,7 @@ export function RecipeListPage() {
 
   const active = hasFilters ? searchResults : allRecipes;
   const recipes: Recipe[] = active.data ?? [];
-  const { toggle, isFavorite } = useFavorites();
+  const { toggle, isFavorite } = useFavoritesActions();
 
   return (
     <div>
